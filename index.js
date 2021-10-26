@@ -1,5 +1,7 @@
 import Sassify from "./import.js";
 
+console.log(Sassify);
+
 var SassStyles = document.querySelectorAll(".sass-style");
             
 SassStyles.forEach(element => {
