@@ -93,4 +93,5 @@ SassStyles.forEach(element => {
     element.parentElement.removeChild(element);
     document.head.appendChild(style);
     document.body.appendChild(output);
+    output.style.display="none";
 });
