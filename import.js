@@ -1,6 +1,7 @@
 function Sassify(style) {
     style = style.replace(/[^:]\/\/([^\n]+)/gm, "\/*$1*/");
-    // style = style.replace(/\/\*([\s\S]*?\*\/|([^:]|^)\/\/.*$)/gms, "/* this is a comment and it won't work  whether its mixin or extend */");
+    style = style.replace(/@keyframes\s+([^\s{]+)\s+{/gi, "@keyframes $1 CURLYBRACKET_HERE");
+    style = style.replace(/@media\s*([^{]+){/gi, "@media $1 CURLYBRACKET_HERE");
 
     let variables = style.match(/(?:[^:]|^)\s*\$[^\s:]+\s*:\s*[^;]+/g);
     style = style.replace(/(?:[^:]|^)\s*\$[^\s:]+\s*:\s*[^;]+;/g, "");
@@ -74,6 +75,8 @@ function Sassify(style) {
     
     const find_abs = /:\s*abs\((-|\+|)\s*(\d+)(px|cm|mm|in|pt|pc|em|ex|ch|rem|vw|vh|vmin|vmax|%)\s*\);/gi;
     style = style.replace(find_abs, ": $2$3;");
+    
+    style = style.replace(/CURLYBRACKET_HERE/g, "{");
     
     return style;
 }
