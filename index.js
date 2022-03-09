@@ -3,7 +3,7 @@ import Sassify from "./import.js";
 let elementName = "sass-style";
 
 if (!customElements.get(elementName)) {
-    class SASS extends HTMLDivElement {
+    class SASS extends HTMLElement {
         constructor() {
             super();
         }
