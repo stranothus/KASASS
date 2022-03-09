@@ -1,6 +1,24 @@
-# Contents
+# Using KASASS
 
-1. **Single line comments** :
+Using KASASS is easy! Just add
+```html
+<script type = "module" src = "https://cdn.jsdelivr.net/gh/stranothus/KASASS/index.js"></script>
+```
+For modules or 
+```html
+<script src = "https://cdn.jsdelivr.net/gh/stranothus/KASASS/importless.js"></script>
+```
+For no module into your Khan Academy webpage and 
+```html
+<sass-style>
+  // your KASASS here!
+<sass-style>
+```
+To write your KASASS in, and you're ready to go!
+
+# Features
+
+## Single line comments:
 In standard CSS, commenting code is a bit lengthy process and KASASS has made it easier!
 
 ```CSS
@@ -21,7 +39,7 @@ p {
 }
 ```
 
-2. **Variables** :
+## Variables:
 In standard CSS, declaring variables is also a lengthy process.
 
 ```CSS
@@ -52,7 +70,7 @@ h1 {
 ```           
 
 
-3. **Inheritance** :
+## Inheritance:
 In standard CSS, there's no way to re-use a piece of css-code in various selectors but KASASS has @extend.
 
 The @extend directive lets you share a set of CSS properties from one container to many selectors.
@@ -75,7 +93,7 @@ The @extend directive lets you share a set of CSS properties from one container 
 ```          
 
 
-4. **No need of calc()** :
+## No need of calc():
 In standard CSS, we have to wrap calculations inside the calc() function but in KASASS we don't need to!
 
 ```CSS
@@ -92,7 +110,7 @@ KASASS
 }            
 ```
 
-5. **Mixin** :
+## Mixin:
 In standard CSS, we have no way to create reusable functions but KASASS has a way to do this.
 The @mixin directive lets you create CSS code that is to be reused throughout the website. The @include directive is created to let you use (include) the mixin.
 
@@ -112,7 +130,7 @@ section {
 }
 ```
 
-6. **Nesting** :
+## Nesting:
 KASASS lets you nest CSS selectors in the same way as HTML.
 
 KASASS
@@ -133,4 +151,22 @@ nav {
     text-decoration: none;
   }
 }
+```
+
+# Recommendations:
+KASASS is not a full implementation of SCSS. Instead, it transpiles SCSS code to CSS code. Because this takes a second, you may have a brief flash of raw HTML before your KASASS starts working. It's recommended to hide body content with a standard style tag and then set it back to visible in the KASASS, like so:
+```html
+<style>
+  body {
+    display: none;
+  }
+</style>
+
+<sass-style>
+  body {
+    display: block;
+  }
+
+  ... // rest of your KASASS here
+</sass-style>
 ```
