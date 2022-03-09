@@ -1,4 +1,4 @@
-let elementName = "sass-style";
+var elementName = "sass-style";
 
 if (!customElements.get(elementName)) {
     class SASS extends HTMLDivElement {
@@ -93,7 +93,7 @@ function Sassify(style) {
     return style;
 }
 
-let SassStyles = document.querySelectorAll("sass-style");
+var SassStyles = document.querySelectorAll("sass-style");
 
 SassStyles.forEach(element => {
     const sassified = Sassify(element.innerHTML);
