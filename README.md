@@ -4,5 +4,5 @@ A custom CSS extension made by Quinn Gibson (@stranothus) and LeafKn (@knaagar) 
 Implemented nearly all SASS features through Javascript RegEx.
 
 ```HTML
-<script src = "https://cdn.jsdelivr.net/gh/stranothus/KASASS/importless.js"></script>
+<script src = "https://cdn.jsdelivr.net/gh/stranothus/KASASS@latest/importless.js"></script>
 ```
