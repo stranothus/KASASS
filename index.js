@@ -1,14 +1,26 @@
 import Sassify from "./import.js";
 
-var SassStyles = document.querySelectorAll(".sass-style");
+let elementName = "sass-style";
+
+if (!customElements.get(elementName)) {
+    class SASS extends HTMLDivElement {
+        constructor() {
+            super();
+        }
+    }
+    
+    customElements.define(elementName, SASS);
+}
+
+const SassStyles = document.querySelectorAll("sass-style");
             
 SassStyles.forEach(element => {
-    let sassified = Sassify(element.innerHTML);
+    const sassified = Sassify(element.innerHTML);
     
-    let style = document.createElement("style");
+    const style = document.createElement("style");
     style.innerText = sassified;
     
-    let output = document.createElement("div");
+    const output = document.createElement("div");
     output.classList.add("output");
     output.textContent = sassified;
     

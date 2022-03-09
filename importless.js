@@ -1,3 +1,15 @@
+let elementName = "sass-style";
+
+if (!customElements.get(elementName)) {
+    class SASS extends HTMLDivElement {
+        constructor() {
+            super();
+        }
+    }
+    
+    customElements.define(elementName, SASS);
+}
+
 function Sassify(style) {
     style = style.replace(/[^:]\/\/([^\n]+)/gm, "\/*$1*/");
     style = style.replace(/@keyframes\s+([^\s{]+)\s+{/gi, "@keyframes $1 CURLYBRACKET_HERE");
@@ -26,42 +38,42 @@ function Sassify(style) {
     style = style.replace(/:(\s*)(-?\d+[a-z%]+\s*[+-\/*][^;]+)\s*/gi, ":$1calc($2)");
 
     function nest(txt) {
-        let matched = txt.match(/[^}\/]+{[^{}]+{[^}]+}/g);
-        let parentSelector = matched.map(v => v.match(/(^|;)[^{;]+{/g).slice(0, -1).join(" ").replace(/;|{/g, "").replace(/\s+/g, " ").trim());
-        let nested = matched.map(v => v.replace(/^[^{]+{[\s\S]+;\s*([^{;]+){/g, "$1{"));
+        const matched = txt.match(/[^}\/]+{[^{}]+{[^}]+}/g);
+        const parentSelector = matched.map(v => v.match(/(^|;)[^{;]+{/g).slice(0, -1).join(" ").replace(/;|{/g, "").replace(/\s+/g, " ").trim());
+        const nested = matched.map(v => v.replace(/^[^{]+{[\s\S]+;\s*([^{;]+){/g, "$1{"));
         
         let without = txt;
         for (let i = 0; i < nested.length; i++) {
             without = without.replace(new RegExp(nested[i].replace(/([\?\*\$\(\)\/])/g, "\\$1")), "");
         }
         
-        let full = parentSelector.map((v, i) => v + " " + nested[i]);
-        let final = without + full.join("");
+        const full = parentSelector.map((v, i) => v + " " + nested[i]);
+        const final = without + full.join("");
         
         return final.replace(/\s+:/g, ":");
     }
     
-    let nestLimit = 100;
+    const nestLimit = 100;
     while (style.match(/[^}]+{[^{}]+{[^}]+}/g) && nestLimit) {
         style = nest(style);
         nestLimit--;
     }
 
-    let mixin_at = /@mixin\s*(\w+)(\s|\s\(.+\)|\(.+\))\s*{([^}]+)}/gms;
-    let mixMatch = style.match(mixin_at);
+    const mixin_at = /@mixin\s*(\w+)(\s|\s\(.+\)|\(.+\))\s*{([^}]+)}/gms;
+    const mixMatch = style.match(mixin_at);
     if(!!mixMatch) {
-        let mixMatch_2 = mixMatch.map(x => x.split(/\s*{\s*/gms).toString().split(/\s*}/).map(x => x.replace(/\s*}/, "")));
-        let x = mixMatch_2.toString().split(",");
-        let names = x.filter(v => v.includes("@mixin")).map(v => v.replace(/@mixin\s*/, "").replace(/\([^\)]+\)/, "").trim());
+        const mixMatch_2 = mixMatch.map(x => x.split(/\s*{\s*/gms).toString().split(/\s*}/).map(x => x.replace(/\s*}/, "")));
+        const x = mixMatch_2.toString().split(",");
+        const names = x.filter(v => v.includes("@mixin")).map(v => v.replace(/@mixin\s*/, "").replace(/\([^\)]+\)/, "").trim());
         
         for(let i = 0; i < names.length; i++) {
-            let includes = style.match(new RegExp("@include\\s+" + names[i] + "[^;]+;"));
-            let mixin = style.match(new RegExp("@mixin\\s+" + names[i] + "[^}]+}"))[0];
-            let variables = mixin.match(/\([^\)]*\)/)[0].replace(/(?:\(|\))/g, "").split(/\.\s*/);
+            const includes = style.match(new RegExp("@include\\s+" + names[i] + "[^;]+;"));
+            const mixin = style.match(new RegExp("@mixin\\s+" + names[i] + "[^}]+}"))[0];
+            const variables = mixin.match(/\([^\)]*\)/)[0].replace(/(?:\(|\))/g, "").split(/\.\s*/);
             if(includes) {
                 for(let e = 0; e < includes.length; e++) {
-                    let include = includes[e];
-                    let parameters = include.match(/\([^\)]*\)/)[0].replace(/(?:\(|\))/g, "").split(/\.\s*/);
+                    const include = includes[e];
+                    const parameters = include.match(/\([^\)]*\)/)[0].replace(/(?:\(|\))/g, "").split(/\.\s*/);
                     let replaceWith = mixin.match(/{[^{]*}/)[0].replace(/(?:{|})/g, "").trim();
                     for(let j = 0; j < variables.length; j++) {
                         replaceWith = replaceWith.replace(new RegExp(variables[j].replace(/\$/g, "\\$"), "g"), parameters[j]);
@@ -81,15 +93,15 @@ function Sassify(style) {
     return style;
 }
 
-var SassStyles = document.querySelectorAll(".sass-style");
-            
+let SassStyles = document.querySelectorAll("sass-style");
+
 SassStyles.forEach(element => {
-    let sassified = Sassify(element.innerHTML);
+    const sassified = Sassify(element.innerHTML);
     
-    let style = document.createElement("style");
+    const style = document.createElement("style");
     style.innerText = sassified;
     
-    let output = document.createElement("div");
+    const output = document.createElement("div");
     output.classList.add("output");
     output.textContent = sassified;
     
