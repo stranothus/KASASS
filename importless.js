@@ -53,7 +53,7 @@ function Sassify(style) {
         return final.replace(/\s+:/g, ":");
     }
     
-    const nestLimit = 100;
+    let nestLimit = 100;
     while (style.match(/[^}]+{[^{}]+{[^}]+}/g) && nestLimit) {
         style = nest(style);
         nestLimit--;

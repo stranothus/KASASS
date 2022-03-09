@@ -2,11 +2,11 @@
 
 Using KASASS is easy! Just add
 ```html
-<script type = "module" src = "https://cdn.jsdelivr.net/gh/stranothus/KASASS@v1.1.1/index.js"></script>
+<script type = "module" src = "https://cdn.jsdelivr.net/gh/stranothus/KASASS@v1.1.2/index.js"></script>
 ```
 For modules or 
 ```html
-<script src = "https://cdn.jsdelivr.net/gh/stranothus/KASASS@v1.1.1/importless.js"></script>
+<script src = "https://cdn.jsdelivr.net/gh/stranothus/KASASS@v1.1.2/importless.js"></script>
 ```
 For no module into your Khan Academy webpage and 
 ```html
